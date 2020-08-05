@@ -4,27 +4,34 @@ import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
 
 import './styles.css';
 
-const TeacherItem: React.FC = () =>{
+interface TeacherItemProps {
+  teacherName: string;
+  description: string;
+  avatar: string;
+  priceClass: string;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = (props) =>{
   return (
     <article className="teacher-item">
       <header>
-        <img src="https://avatars0.githubusercontent.com/u/17826996?s=460&u=3e971178c46afeaaf60874fb37542042ff6f0d75&v=4" alt="Iana Sousa"/>
+        <img src={props.avatar} alt={props.teacherName}/>
         <div>
-          <strong>Iana Sousa</strong>
-          <span>Espanhol</span>
+          <strong>{props.teacherName}</strong>
+          <span>{props.description}</span>
         </div>
       </header>
 
       <p>
-        Fluente em espanhol, ama aprender idiomas.
+        Fluente em inglês, ama aprender idiomas.
         <br/><br/>
-        Gosta de tudo que envolve idiomas, aprendeu muito com a expericncia como missionária na Argentina. É gentil e bem humorada.
+        Gosta de tudo que envolve idiomas, aulas didáticas e com várias práticas de conversação. É gentil e bem didatico.
       </p>
 
       <footer>
         <p>
           Preço/Hora
-          <strong>R$ 60,00</strong>
+          <strong>R$ {props.priceClass}</strong>
         </p>
         <button type="button">
           <img src={whatsappIcon} alt="Whatsapp"/>
