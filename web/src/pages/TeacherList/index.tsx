@@ -69,7 +69,7 @@ function TeacherList() {
           />
 
           <button type="submit">
-            Buscar
+            Filtrar
           </button>
         </form>
       </PageHeader>
