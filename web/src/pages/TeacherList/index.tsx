@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import PageHeader from '../../components/PageHeader';
-import TeacherItem from '../../components/TeacherItem';
+import TeacherItem, { Teacher } from '../../components/TeacherItem';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
+
+import api from '../../services/api';
 
 import './styles.css';
 
 function TeacherList() {
+  const [teachers, setTeachers] = useState([]);
+
+  const [subject, setSubject] = useState('');
+  const [week_day, setWeekDay] = useState('');
+  const [time, setTime] = useState('');
+
+  async function searchTeachers(e: FormEvent) {
+    e.preventDefault();
+
+    const response = await api.get('classes', {
+      params: {
+        subject,
+        week_day,
+        time
+      }
+    });
+
+    setTeachers(response.data);
+  }
+
   return (
     <div id="page-teacher-list" className="container">
       <PageHeader title="Estes são os proffys disponíveis.">
-        <form id="search-teachers">
-
+        <form id="search-teachers" onSubmit={searchTeachers}>
           <Select 
             name="subject" 
             label="Matéria" 
+            value={subject}
+            onChange={(e) => {setSubject(e.target.value)}}
             options={[
               { value: 'Inglês Britânico', label: 'Inglês Britânico' },
               { value: 'Inglês Americano', label: 'Inglês Americano' },
@@ -24,7 +47,9 @@ function TeacherList() {
           />
           <Select 
             name="week_day" 
-            label="Dia da Semana" 
+            label="Dia da Semana"  
+            value={week_day}
+            onChange={(e) => {setWeekDay(e.target.value)}}
             options={[
               { value: '0', label: 'Domingo' },
               { value: '1', label: 'Segunda' },
@@ -35,42 +60,24 @@ function TeacherList() {
               { value: '6', label: 'Sábado' },
             ]}
           />
-          <Input type="time" name="time" label="Hora" />
+          <Input 
+            type="time" 
+            name="time" 
+            label="Hora"  
+            value={time}
+            onChange={(e) => {setTime(e.target.value)}}
+          />
 
+          <button type="submit">
+            Buscar
+          </button>
         </form>
       </PageHeader>
 
       <main>
-        <TeacherItem 
-          teacherName="Iana Sousa"
-          description="Inglês Gramatical"
-          avatar="https://avatars0.githubusercontent.com/u/17826996?s=460&u=3e971178c46afeaaf60874fb37542042ff6f0d75&v=4"
-          priceClass="50,00"
-        />
-        <TeacherItem 
-          teacherName="Marcos Spindola"
-          description="Inglês Britânico"
-          avatar="https://avatars.preply.com/i/logos/i/logos/avatar_8rfu7.jpg?d=160x160&f=webp"
-          priceClass="55,00"
-        />
-        <TeacherItem 
-          teacherName="Kéfera Martins"
-          description="Conversação em Inglês"
-          avatar="https://avatars.preply.com/i/logos/i/logos/avatar_lsyny.jpg?d=160x160&f=webp"
-          priceClass="80,00"
-        />
-        <TeacherItem 
-          teacherName="Mikaela Jonhson"
-          description="Inglês"
-          avatar="https://avatars.preply.com/i/logos/i/logos/avatar_wm016.jpg?d=160x160&f=webp"
-          priceClass="65,00"
-        />
-        <TeacherItem 
-          teacherName="John Neher"
-          description="Inglês"
-          avatar="https://avatars.preply.com/i/logos/i/logos/avatar_6q62j.jpg?d=160x160&f=webp"
-          priceClass="59,00"
-        />
+        {teachers.map((teacher: Teacher) => {
+          return <TeacherItem key={teacher.id} teacher={teacher} />;
+        })}
       </main>
 
     </div>
