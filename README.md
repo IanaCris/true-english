@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./github/true_english.svg" alt="True English" />
+  <img src="./.github/true_english.svg" alt="True English" />
 </p>
 
 <h1 name="sobre">ℹ Sobre o Projeto</h1>
