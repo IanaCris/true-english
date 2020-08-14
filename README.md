@@ -11,7 +11,7 @@ Uma plataforma que conecta alunos com professores. 🎯
 <h3>Web</h3>
 <img alt="Results1" title="landing web" src=".github/landing_web.png" width="400px"/>
 <h3>App Mobile (IOS & Android)</h3>
-<img alt="Results2" title="landing mobile" src=".github/landing_mobile.jpg" width="400px"/>
+<img alt="Results2" title="landing mobile" src=".github/landing_mobile.jpg" height="400" width="300px"/>
 
 <h1 name="run">:boom: Como Executar o projeto</h1> <br>
 
