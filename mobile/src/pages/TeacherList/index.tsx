@@ -1,20 +1,48 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, TextInput } from 'react-native';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
 
 import PageHeader from '../../components/PageHeader';
-import TeacherItem from '../../components/TeacherItem';
+import TeacherItem, { Teacher } from '../../components/TeacherItem';
+
+import api from '../../services/api';
 
 import styles from './styles';
 
 function TeacherList() {
-const [isfilterVisible, setIsFilterVisible] = useState(false);
+  const [teachers, setTeachers] = useState([]);
+  const [isfilterVisible, setIsFilterVisible] = useState(false);
 
+  const [subject, setSubject] = useState('');
+  const [week_day, setWeekDay] = useState('');
+  const [time, setTime] = useState('');
+
+  function handleToggleFilterVisible() {
+    setIsFilterVisible(!isfilterVisible);
+  }
+
+  async function handleFiltersSubmit() {
+    const response = await api.get('classes', {
+      params: {
+        subject,
+        week_day,
+        time
+      }
+    });
+
+    setIsFilterVisible(false);
+    setTeachers(response.data);
+  }
+  
   return (
     <View style={styles.container}>
       <PageHeader 
         title="Professores disponíveis" 
         headerRight={(
-          <View>Iana</View>
+          <BorderlessButton onPress={handleToggleFilterVisible}>
+          <Feather name="filter" size={20} color='#FFF' />
+          </BorderlessButton>
         )} 
       >
         { isfilterVisible && (
@@ -23,6 +51,8 @@ const [isfilterVisible, setIsFilterVisible] = useState(false);
             <TextInput 
               style={styles.input} 
               placeholder="Qual a matéria?"
+              value={subject}
+              onChangeText={text => {setSubject(text)}}
               placeholderTextColor="#c1bccc"
             />
 
@@ -32,6 +62,8 @@ const [isfilterVisible, setIsFilterVisible] = useState(false);
                 <TextInput 
                   style={styles.input} 
                   placeholder="Qual o dia?"
+                  value={week_day}
+                  onChangeText={text => {setWeekDay(text)}}
                   placeholderTextColor="#c1bccc"
                 />
               </View>
@@ -41,10 +73,16 @@ const [isfilterVisible, setIsFilterVisible] = useState(false);
                 <TextInput 
                   style={styles.input} 
                   placeholder="Qual horário?"
+                  value={time}
+                  onChangeText={text => {setTime(text)}}
                   placeholderTextColor="#c1bccc"
                 />
               </View>
             </View>
+
+            <RectButton onPress={handleFiltersSubmit} style={styles.submitButton}>
+              <Text style={styles.submitButtonText}>Filtrar</Text>
+            </RectButton>
           </View>
         )}
       </PageHeader>
@@ -56,11 +94,9 @@ const [isfilterVisible, setIsFilterVisible] = useState(false);
           paddingBottom: 16,
         }}
       >
-        <TeacherItem />
-        <TeacherItem />
-        <TeacherItem />
-        <TeacherItem />
-        <TeacherItem />
+        {teachers.map((teacher: Teacher) => {
+          return <TeacherItem key={teacher.id} teacher={teacher} />;
+        })}
       </ScrollView>
     </View>
   );

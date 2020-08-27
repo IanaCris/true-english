@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 
   priceValue: {
     fontFamily: 'Archivo_700Bold',
-    color: '#8257e5',
+    color: '#177e89',
     fontSize: 16,
   },
 
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontFamily: 'Archivo_700Bold',
     fontSize: 16,
-    marginLeft: 16,
+    marginLeft: 16
   }
 });
 
