@@ -8,7 +8,7 @@ True English is based on the Proffy project, which is a project in honor of Nati
 
 It is a platform that connects students with teachers. 🎯
 
-<h1 name="preview">:eyes: Preview do Projeto</h1>
+<h1 name="preview">:eyes: Project Preview</h1>
 <h3>Web</h3>
 <img alt="Results1" title="landing web" src=".github/landing_web.png" width="400px"/>
 <h3>App Mobile (IOS & Android)</h3>
